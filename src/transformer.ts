@@ -5,8 +5,16 @@ import {produce} from 'immer';
 import {Model, Field} from '.';
 import {DMMF} from '@prisma/generator-helper';
 
-function singularizeModelName(modelName: string) {
-	return camelcase(pluralize(modelName, 1), {pascalCase: true});
+const singularizeModelName = (modelName: string) =>
+{
+  let newmodelname = modelName;
+  if (newmodelname.startsWith('server_')){
+    newmodelname = newmodelname.replace('server_', '')
+  }
+  if (newmodelname.startsWith('Server')){
+    newmodelname = newmodelname.replace('Server', '')
+  }
+  return camelcase(pluralize(newmodelname, 1), { pascalCase: true });
 }
 
 function transformModel(model: Model) {
